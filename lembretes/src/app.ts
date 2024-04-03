@@ -19,14 +19,14 @@ interface Lembrete{
 }
 const lembretes: Record<string, Lembrete> = {}
 let id: string = '1'
-//GET /lembretes obter a cole��o de lembretes
+//GET /lembretes obter a coleÃ§Ã£o de lembretes
 app.get('/lembretes', (req,res) => {
     res.json(lembretes)
 })
 
 //POST /lembretes cadastrar novo lembrete
 app.post('/lembretes', (req,res) => {
-    //extrair o texto do corpo da requisi��o
+    //extrair o texto do corpo da requisiÃ§Ã£o
     const { texto } = req.body
     //construir um novo lembrete
     const lembrete = { id, texto }
@@ -39,7 +39,6 @@ app.post('/lembretes', (req,res) => {
 })
 
 //GET /lembretes/{id} obter um lembrete pelo id
-
 app.get('/lembretes/:id', (req,res) => {
     const { id } = req.params;
     const lembrete = lembretes[id];
@@ -54,7 +53,7 @@ app.put('/lembretes/:id', (req,res) => {
     const { id } = req.params;
     const lembrete = lembretes[id];
     if (lembrete) {
-         //extrair o texto do corpo da requisi��o
+         //extrair o texto do corpo da requisiÃ§Ã£o
         const { texto } = req.body
         //construir um novo lembrete
         const lembrete = { id, texto }
