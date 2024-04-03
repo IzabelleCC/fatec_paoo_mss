@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "fatec_paoo_mss",
-    "dateExported": "2024-03-27T21:30:37.576Z",
+    "dateExported": "2024-04-03T21:03:58.868Z",
     "version": "1.1",
     "folders": [
         {
@@ -29,12 +29,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-03-27T20:48:16.261Z",
-            "modified": "2024-03-27T21:26:11.876Z",
+            "modified": "2024-04-03T20:28:24.153Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"texto\": \"Fazer bolo\"\n}",
+                "raw": "{\n  \"texto\": \"Fazer cafe\"\n}",
                 "form": []
             },
             "tests": []
@@ -84,6 +84,39 @@
                 "raw": "{\n  \"texto\": \"Fazer cha\"\n}",
                 "form": []
             },
+            "tests": []
+        },
+        {
+            "_id": "96e68f69-b01c-4219-917f-86730246be3b",
+            "colId": "e48ce4cc-ff2b-4703-960f-3cfd5abc35e3",
+            "containerId": "878bdff3-61c5-4dab-bad9-b91a6df4a5f5",
+            "name": "salvar observacao",
+            "url": "localhost:5000/lembretes/1/observacoes",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-04-03T19:59:48.226Z",
+            "modified": "2024-04-03T20:32:19.158Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"texto\": \"{{#string}}\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f11b5605-6d38-45c7-b10b-2b3b77462df8",
+            "colId": "e48ce4cc-ff2b-4703-960f-3cfd5abc35e3",
+            "containerId": "878bdff3-61c5-4dab-bad9-b91a6df4a5f5",
+            "name": "obter observacoes de um lembrete",
+            "url": "localhost:5000/lembretes/1/observacoes",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-04-03T20:25:59.065Z",
+            "modified": "2024-04-03T20:26:52.066Z",
+            "headers": [],
+            "params": [],
             "tests": []
         }
     ]
