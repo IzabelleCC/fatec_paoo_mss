@@ -1,4 +1,6 @@
 import express from 'express'
+import axios from 'axios';  
+
 const app = express()
 app.use(express.json())
 /*
@@ -34,6 +36,10 @@ app.post('/lembretes', (req,res) => {
     lembretes[id] = lembrete
     //incremento o id
     id = (+id + 1).toString()
+    axios.post('http://localhost:10000/eventos', {
+        tipo: 'LembreteCriado',
+        dados: lembrete
+    })
     //responder ao cliente
     res.json(lembrete)
 })
@@ -59,10 +65,15 @@ app.put('/lembretes/:id', (req,res) => {
         const lembrete = { id, texto }
         //armazenar o novo lembrete
         lembretes[id] = lembrete
+
         res.json(lembrete);
     } else {
         res.status(404).send('Lembrete nao encontrado');
     }
+})
+app.post('/eventos', (req,res) => {
+    console.log(req.body)
+    res.send()
 })
 
 const port = 4000

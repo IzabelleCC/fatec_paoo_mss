@@ -1,5 +1,7 @@
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
+
 const app = express()
 app.use(express.json())
 /*
@@ -31,6 +33,10 @@ app.post('/lembretes/:id/observacoes', (req,res) => {
     observacoesDoLembrete.push({id: idObs, texto})
     // atualizar o ponteiro na base global para que ele aponte apar a coleção que contema nova observacao
     observacoes[req.params.id] = observacoesDoLembrete
+    axios.post('http://localhost:10000/eventos', {
+        tipo: 'ObservacaoCriada',
+        dados: {...obs, lembreteId: req.params.id}
+    })
     //responder para o cliente com status 201 e entregando a ele a coleÃ§Ã£o atualizada
     res.status(201).json(obs)
 })
@@ -38,6 +44,11 @@ app.post('/lembretes/:id/observacoes', (req,res) => {
 //GET /lembretes/123456/observaÃ§Ãµes
 app.get('/lembretes/:id/observacoes', (req,res) => {
    res.json(observacoes[req.params.id] || [])
+})
+
+app.post('/eventos', (req, res) => {
+    console.log(req.body)
+    res.send()
 })
 
 const port = 5000
