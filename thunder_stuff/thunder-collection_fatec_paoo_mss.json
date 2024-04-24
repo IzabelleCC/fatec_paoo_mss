@@ -1,8 +1,9 @@
 {
-    "client": "Thunder Client",
+    "clientName": "Thunder Client",
     "collectionName": "fatec_paoo_mss",
-    "dateExported": "2024-04-03T21:03:58.868Z",
-    "version": "1.1",
+    "collectionId": "e48ce4cc-ff2b-4703-960f-3cfd5abc35e3",
+    "dateExported": "2024-04-24T21:02:55.795Z",
+    "version": "1.2",
     "folders": [
         {
             "_id": "fff4a0a5-2d52-4153-b13c-3164bf6a30fb",
@@ -17,6 +18,13 @@
             "containerId": "",
             "created": "2024-03-27T20:47:12.843Z",
             "sortNum": 20000
+        },
+        {
+            "_id": "d7fa51c2-7548-458c-b12c-2793a985aad5",
+            "name": "consulta",
+            "containerId": "",
+            "created": "2024-04-24T20:54:58.655Z",
+            "sortNum": 30000
         }
     ],
     "requests": [
@@ -29,15 +37,13 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-03-27T20:48:16.261Z",
-            "modified": "2024-04-03T20:28:24.153Z",
+            "modified": "2024-04-24T20:57:02.273Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"texto\": \"Fazer cafe\"\n}",
+                "raw": "{\n  \"texto\": \"Comprar doce\"\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "24f40ca0-b92c-4b02-ae3f-b4c8dfe69901",
@@ -91,19 +97,17 @@
             "colId": "e48ce4cc-ff2b-4703-960f-3cfd5abc35e3",
             "containerId": "878bdff3-61c5-4dab-bad9-b91a6df4a5f5",
             "name": "salvar observacao",
-            "url": "localhost:5000/lembretes/1/observacoes",
+            "url": "localhost:5000/lembretes/2/observacoes",
             "method": "POST",
             "sortNum": 70000,
             "created": "2024-04-03T19:59:48.226Z",
-            "modified": "2024-04-03T20:32:19.158Z",
+            "modified": "2024-04-24T20:57:39.956Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"texto\": \"{{#string}}\"\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "f11b5605-6d38-45c7-b10b-2b3b77462df8",
@@ -118,6 +122,19 @@
             "headers": [],
             "params": [],
             "tests": []
+        },
+        {
+            "_id": "9261f4cf-b792-425a-ace2-a72217ba2654",
+            "colId": "e48ce4cc-ff2b-4703-960f-3cfd5abc35e3",
+            "containerId": "d7fa51c2-7548-458c-b12c-2793a985aad5",
+            "name": "obter base",
+            "url": "localhost:6000/lembretes",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-04-24T20:55:06.498Z",
+            "modified": "2024-04-24T20:56:15.062Z",
+            "headers": []
         }
-    ]
+    ],
+    "ref": "WX2eGbDKh3KCDxE3EM1fDlws7a7qosZaWidKnd6tEEQtNrGaI2t3SQ3iAwXeUUvh15bDj4oE42iC_QDTMonWFg"
 }
