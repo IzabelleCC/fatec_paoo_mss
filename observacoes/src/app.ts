@@ -2,7 +2,7 @@ import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 import { format } from 'date-fns';
-import services from '../../configPortas';
+import ports from '../../configPortas';
 
 const app = express()
 app.use(express.json())
@@ -25,7 +25,7 @@ function registro (msg: string){
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: string = ` ${dataFormat} - (mss-observacoes) ${msg}`
 
-    axios.post('http://localhost:9000/eventos',{
+    axios.post(`http://localhost:${ports.eventos}/eventos`,{
         tipo: 'RegistroCriado',
         dados: registro
     })
@@ -47,7 +47,7 @@ app.post('/lembretes/:id/observacoes', (req,res) => {
     observacoesDoLembrete.push({id: idObs, texto})
     // atualizar o ponteiro na base global para que ele aponte apar a coleção que contema nova observacao
     observacoes[req.params.id] = observacoesDoLembrete
-    axios.post('http://localhost:10000/eventos', {
+    axios.post(`http://localhost:${ports.eventos}/eventos`, {
         tipo: 'ObservacaoCriada',
         dados: {...obs, lembreteId: req.params.id}
     })
@@ -63,12 +63,11 @@ app.get('/lembretes/:id/observacoes', (req,res) => {
 })
 
 app.post('/eventos', (req, res) => {
-    registro('POST /eventos')
     console.log(req.body)
     res.send()
 })
 
-const port = services.observacoes
+const port = ports.observacoes
 app.listen(port, () => {
     console.log(`Observacoes. ${port}`)
 })

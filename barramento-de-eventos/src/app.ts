@@ -1,6 +1,6 @@
 import express from 'express';
 import axios from 'axios';
-import services from '../../configPortas';
+import ports from '../../configPortas';
 
 const app = express();
 app.use(express.json());
@@ -8,16 +8,17 @@ app.use(express.json());
 app.post('/eventos', (req, res) => {
     const evento = req.body;
     //evento lembrentes
-    axios.post('http://localhost:4000/eventos', evento);
+    axios.post(`http://localhost:${ports.lembretes}/eventos`, evento);
     //eventos observacoes
-    axios.post('http://localhost:5000/eventos', evento);
+    axios.post(`http://localhost:${ports.observacoes}/eventos`, evento);
     //eventos consulta
-    axios.post('http://localhost:6000/eventos', evento);
+    axios.post(`http://localhost:${ports.consulta}/eventos`, evento);
     //eventos registro
-   // axios.post('http://localhost:9000/eventos', evento);
+    axios.post(`http://localhost:${ports.registro}/eventos`, evento);
 })
 
-const port = services.eventos
+
+const port = ports.eventos
 app.listen(port, () => {
   console.log(`Barramento de eventos ${port}`)
 });

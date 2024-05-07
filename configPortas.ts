@@ -6,7 +6,7 @@ interface ServicesConfig {
     registro: number;
 }
 
-const services: ServicesConfig = {
+const ports: ServicesConfig = {
     eventos: 10000,
     lembretes: 4000,
     observacoes: 5000,
@@ -14,4 +14,4 @@ const services: ServicesConfig = {
     registro: 9000
 };
 
-export default services;
+export default ports;

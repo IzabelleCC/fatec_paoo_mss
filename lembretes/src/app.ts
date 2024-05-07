@@ -2,7 +2,7 @@ import express from 'express'
 import axios from 'axios';  
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns';
-import services from '../../configPortas';
+import ports from '../../configPortas';
 
 
 const app = express()
@@ -33,7 +33,7 @@ function registro (msg: string){
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: string = ` ${dataFormat} - (mss-lembretes) ${msg}`
 
-    axios.post('http://localhost:9000/eventos',{
+    axios.post(`http://localhost:${ports.eventos}/eventos`,{
         tipo: 'RegistroCriado',
         dados: registro
     })
@@ -55,7 +55,7 @@ app.post('/lembretes', (req,res) => {
     //incremento o id
     id = (+id + 1).toString()
     
-    axios.post('http://localhost:10000/eventos',{
+    axios.post(`http://localhost:${ports.eventos}/eventos`,{
         tipo: 'LembreteCriado',
         dados: lembrete
     })
@@ -93,10 +93,9 @@ app.put('/lembretes/:id', (req,res) => {
     }
 })
 app.post('/eventos', (req,res) => {
-    registro(`POST /eventos`)
     console.log(req.body)
     res.send()
 })
 
-const port = services.lembretes
+const port = ports.lembretes
 app.listen(port,() => console.log(`Lembretes. Porta ${port}.`))
