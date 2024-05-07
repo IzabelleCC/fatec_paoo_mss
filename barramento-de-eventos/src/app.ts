@@ -12,6 +12,8 @@ app.post('/eventos', (req, res) => {
     axios.post('http://localhost:5000/eventos', evento);
     //eventos consulta
     axios.post('http://localhost:6000/eventos', evento);
+    //eventos registro
+   // axios.post('http://localhost:9000/eventos', evento);
 })
 
 const port = 10000;
