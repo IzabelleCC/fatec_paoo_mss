@@ -1,5 +1,6 @@
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
+import services from '../../configPortas';
 
 const app = express()
 app.use(express.json())
@@ -8,7 +9,6 @@ interface Registro {
     tipo: string;
     dados: any;
 }
-
 
 const baseRegistros: Record<string, any> = {}
 
@@ -21,11 +21,11 @@ app.post('/eventos', (req, res) => {
     res.status(200).json(baseRegistros)
 })
 
-app.get('/registro', (req,res) => {
+app.get('/registros', (req,res) => {
     res.status(200).json(baseRegistros)
 })
 
-const port = 9000
+const port = services.registro
 app.listen(port, () => {
     console.log(`Observacoes. ${port}`)
 })

@@ -2,6 +2,7 @@ import express from 'express'
 import axios from 'axios';  
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns';
+import services from '../../configPortas';
 
 
 const app = express()
@@ -29,7 +30,7 @@ let id: string = '1'
 function registro (msg: string){
 
     const data = new Date()
-    const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss')
+    const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: string = ` ${dataFormat} - (mss-lembretes) ${msg}`
 
     axios.post('http://localhost:9000/eventos',{
@@ -97,5 +98,5 @@ app.post('/eventos', (req,res) => {
     res.send()
 })
 
-const port = 4000
+const port = services.lembretes
 app.listen(port,() => console.log(`Lembretes. Porta ${port}.`))

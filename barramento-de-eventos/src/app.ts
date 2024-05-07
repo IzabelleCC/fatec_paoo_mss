@@ -1,5 +1,6 @@
 import express from 'express';
 import axios from 'axios';
+import services from '../../configPortas';
 
 const app = express();
 app.use(express.json());
@@ -16,7 +17,7 @@ app.post('/eventos', (req, res) => {
    // axios.post('http://localhost:9000/eventos', evento);
 })
 
-const port = 10000;
+const port = services.eventos
 app.listen(port, () => {
-  console.log(`Barramento de eventos ${port}`);
+  console.log(`Barramento de eventos ${port}`)
 });

@@ -1,5 +1,6 @@
 import express from 'express';
 import axios from 'axios'
+import services from '../../configPortas';
 
 const app = express()
 app.use(express.json())
@@ -38,7 +39,7 @@ app.post('/eventos', (req, res) => {
     res.status(200).json(baseConsolidada)
 })
 
-const port = 6000
+const port = services.consulta
 app.listen(port, () => {
     console.log(`Consulta. ${port}`)
 })
