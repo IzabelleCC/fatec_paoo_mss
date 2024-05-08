@@ -20,11 +20,16 @@ interface Lembrete {
 
 const baseConsolidada: Record<string, Lembrete> = {}
 
-function registro (msg: string){
+interface iRegistro{
+    data: string;
+    mss: string;
+    endpoint: string;
+}
+function registroFunction (msg: string){
 
     const data = new Date()
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
-    const registro: string = ` ${dataFormat} - (mss-consulta) ${msg}`
+    const registro: iRegistro = {data: dataFormat, mss: 'Consulta', endpoint: msg}
 
     axios.post(`http://localhost:${ports.eventos}/eventos`,{
         tipo: 'RegistroCriado',
@@ -33,7 +38,7 @@ function registro (msg: string){
 }
 
 app.get('/lembretes', (req,res) => {
-    registro('GET /lembretes')
+    registroFunction('GET /lembretes')
     res.status(200).json(baseConsolidada)
 })
 

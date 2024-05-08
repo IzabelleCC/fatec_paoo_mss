@@ -26,12 +26,16 @@ interface Lembrete{
 const lembretes: Record<string, Lembrete> = {}
 let id: string = '1'
 
-
-function registro (msg: string){
+interface iRegistro{
+    data: string;
+    mss: string;
+    endpoint: string;
+}
+function registroFunction (msg: string){
 
     const data = new Date()
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
-    const registro: string = ` ${dataFormat} - (mss-lembretes) ${msg}`
+    const registro: iRegistro = {data: dataFormat, mss: 'Lembretes', endpoint: msg}
 
     axios.post(`http://localhost:${ports.eventos}/eventos`,{
         tipo: 'RegistroCriado',
@@ -40,7 +44,7 @@ function registro (msg: string){
 }
 //GET /lembretes obter a coleÃ§Ã£o de lembretes
 app.get('/lembretes', (req,res) => {
-    registro('GET /lembretes')
+    registroFunction('GET /lembretes')
     res.json(lembretes)
 })
 
@@ -59,7 +63,7 @@ app.post('/lembretes', (req,res) => {
         tipo: 'LembreteCriado',
         dados: lembrete
     })
-    registro('POST /lembretes')
+    registroFunction('POST /lembretes')
     //responder ao cliente
     res.json(lembrete)
 })
@@ -69,7 +73,7 @@ app.get('/lembretes/:id', (req,res) => {
     const { id } = req.params;
     const lembrete = lembretes[id];
     if (lembrete) {
-        registro(`GET /lembretes/:id`)
+        registroFunction(`GET /lembretes/:id`)
         res.json(lembrete);
     } else {
         res.status(404).send('Lembrete nao encontrado');
@@ -86,7 +90,7 @@ app.put('/lembretes/:id', (req,res) => {
         const lembrete = { id, texto }
         //armazenar o novo lembrete
         lembretes[id] = lembrete
-        registro(`PUT /lembretes/:id`)
+        registroFunction(`PUT /lembretes/:id`)
         res.json(lembrete);
     } else {
         res.status(404).send('Lembrete nao encontrado');

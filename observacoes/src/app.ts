@@ -19,11 +19,16 @@ interface Observacao{
     texto: string;
 }
 
-function registro (msg: string){
+interface iRegistro{
+    data: string;
+    mss: string;
+    endpoint: string;
+}
+function registroFunction (msg: string){
 
     const data = new Date()
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
-    const registro: string = ` ${dataFormat} - (mss-observacoes) ${msg}`
+    const registro: iRegistro = {data: dataFormat, mss: 'Observacoes', endpoint: msg}
 
     axios.post(`http://localhost:${ports.eventos}/eventos`,{
         tipo: 'RegistroCriado',
@@ -51,14 +56,14 @@ app.post('/lembretes/:id/observacoes', (req,res) => {
         tipo: 'ObservacaoCriada',
         dados: {...obs, lembreteId: req.params.id}
     })
-    registro('POST /lembretes/:id/observacoes')
+    registroFunction('POST /lembretes/:id/observacoes')
     //responder para o cliente com status 201 e entregando a ele a coleÃ§Ã£o atualizada
     res.status(201).json(obs)
 })
 
 //GET /lembretes/123456/observaÃ§Ãµes
 app.get('/lembretes/:id/observacoes', (req,res) => {
-    registro('GET /lembretes/:id/observacoes')
+    registroFunction('GET /lembretes/:id/observacoes')
    res.json(observacoes[req.params.id] || [])
 })
 
