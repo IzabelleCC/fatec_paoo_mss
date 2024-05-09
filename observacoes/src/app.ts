@@ -6,17 +6,40 @@ import ports from '../../configPortas';
 
 const app = express()
 app.use(express.json())
-/*
-a estrutura da base de observaÃ§Ãµes...
-{
-    "1":[
-        {"id"}
-    ]
+
+const funcoes: Record<string, Function> = {
+    ObservacaoClassificada: (observacao: Observacao) => {
+        // encontrar a observacao na base local e atualizar o seu status
+        const observacoesAux = observacoes[observacao.id]
+        const obsParaAtualizar: Observacao = observacoesAux.find(o => o.id === observacao.id)!
+        obsParaAtualizar.status = observacao.status
+        // emitir um evento do tipo ObservacaoAtualizada
+        axios.post(`http://localhost:${ports.barramentoEventos}/eventos`, {
+            tipo: 'ObservacaoAtualizada',
+            dados: {
+                id: observacao.id,
+                texto: observacao.texto,
+                lembreteId: observacao.lembreteId,
+                status: observacao.status
+            }
+        })
+    }
 }
-*/
+
+app.post('/eventos', (req, res) => {
+    try{
+        console.log(req.body)
+        funcoes[req.body.tipo](req.body.dados)
+    }
+    catch(e){}
+    res.send()
+})
+
 interface Observacao{
     id: string;
     texto: string;
+    lembreteId: string;
+    status: string;
 }
 
 interface iRegistro{
@@ -25,12 +48,12 @@ interface iRegistro{
     endpoint: string;
 }
 function registroFunction (msg: string){
-
+    
     const data = new Date()
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: iRegistro = {data: dataFormat, mss: 'Observacoes', endpoint: msg}
 
-    axios.post(`http://localhost:${ports.eventos}/eventos`,{
+    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`,{
         tipo: 'RegistroCriado',
         dados: registro
     })
@@ -45,14 +68,13 @@ app.post('/lembretes/:id/observacoes', (req,res) => {
     const { texto } = req.body
     //pegar a colecao de observacoes do lembrete cujo id encontra na url, caso exista
     const observacoesDoLembrete: Observacao[] = observacoes[req.params.id] || []
-    const obs = {id: idObs, texto}
+    const obs = {id: idObs, texto, status: 'aguardando', lembreteId: req.params.id}
     observacoesDoLembrete.push(obs)
     //caso contrario, pegar uma colecao nova, vazia.   
     // na coleÃ§Ã£o pega no passo anterior, adiciono um novo objeto caracterizado por id e texto
-    observacoesDoLembrete.push({id: idObs, texto})
     // atualizar o ponteiro na base global para que ele aponte apar a coleção que contema nova observacao
     observacoes[req.params.id] = observacoesDoLembrete
-    axios.post(`http://localhost:${ports.eventos}/eventos`, {
+    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`, {
         tipo: 'ObservacaoCriada',
         dados: {...obs, lembreteId: req.params.id}
     })
@@ -67,10 +89,6 @@ app.get('/lembretes/:id/observacoes', (req,res) => {
    res.json(observacoes[req.params.id] || [])
 })
 
-app.post('/eventos', (req, res) => {
-    console.log(req.body)
-    res.send()
-})
 
 const port = ports.observacoes
 app.listen(port, () => {

@@ -37,7 +37,7 @@ function registroFunction (msg: string){
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: iRegistro = {data: dataFormat, mss: 'Lembretes', endpoint: msg}
 
-    axios.post(`http://localhost:${ports.eventos}/eventos`,{
+    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`,{
         tipo: 'RegistroCriado',
         dados: registro
     })
@@ -59,7 +59,7 @@ app.post('/lembretes', (req,res) => {
     //incremento o id
     id = (+id + 1).toString()
     
-    axios.post(`http://localhost:${ports.eventos}/eventos`,{
+    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`,{
         tipo: 'LembreteCriado',
         dados: lembrete
     })
@@ -97,7 +97,10 @@ app.put('/lembretes/:id', (req,res) => {
     }
 })
 app.post('/eventos', (req,res) => {
-    console.log(req.body)
+    try{
+        console.log(req.body)
+    }
+    catch(e){}
     res.send()
 })
 

@@ -15,10 +15,13 @@ app.post('/eventos', (req, res) => {
     axios.post(`http://localhost:${ports.consulta}/eventos`, evento);
     //eventos registro
     axios.post(`http://localhost:${ports.registro}/eventos`, evento);
+    //eventos classificacao
+    axios.post(`http://localhost:${ports.classificacao}/eventos`, evento);
+    res.end()
 })
 
 
-const port = ports.eventos
+const port = ports.barramentoEventos
 app.listen(port, () => {
   console.log(`Barramento de eventos ${port}`)
 });
