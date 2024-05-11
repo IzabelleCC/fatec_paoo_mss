@@ -63,6 +63,7 @@ app.get('/lembretes', (req,res) => {
 
 app.post('/eventos', (req, res) => {
     try{
+    
         console.log(req.body)
         funcoes[req.body.tipo](req.body.dados)
     }

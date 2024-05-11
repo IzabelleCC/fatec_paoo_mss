@@ -10,10 +10,11 @@ app.use(express.json())
 const funcoes: Record<string, Function> = {
     ObservacaoClassificada: (observacao: Observacao) => {
         // encontrar a observacao na base local e atualizar o seu status
-        const observacoesAux = observacoes[observacao.id]
+        const observacoesAux = observacoes[observacao.lembreteId]
         const obsParaAtualizar: Observacao = observacoesAux.find(o => o.id === observacao.id)!
         obsParaAtualizar.status = observacao.status
         // emitir um evento do tipo ObservacaoAtualizada
+        console.log('ObservacaoClassificada recebida')
         axios.post(`http://localhost:${ports.barramentoEventos}/eventos`, {
             tipo: 'ObservacaoAtualizada',
             dados: {
