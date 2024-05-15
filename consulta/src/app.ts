@@ -35,6 +35,11 @@ interface Lembrete {
     observacoes?: Observacao[]
 }
 
+interface Evento{
+    tipo: string;
+    dados: {}
+  }
+
 const baseConsolidada: Record<string, Lembrete> = {}
 
 
@@ -72,6 +77,14 @@ app.post('/eventos', (req, res) => {
 })
 
 const port = ports.consulta
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Consulta. ${port}`)
+    
+    const result = await axios.get(`http://localhost:${ports.barramentoEventos}/eventos`)
+    result.data.forEach((valor: Evento, indice: number , colecao: Evento[]) => {
+        try{
+            funcoes[valor.tipo](valor.dados)
+        }
+        catch(e){}
+    })
 })
