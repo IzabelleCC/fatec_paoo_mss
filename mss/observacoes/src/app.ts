@@ -2,7 +2,6 @@ import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 import { format } from 'date-fns';
-import ports from '../../configPortas';
 
 const app = express()
 app.use(express.json())
@@ -15,7 +14,7 @@ const funcoes: Record<string, Function> = {
         obsParaAtualizar.status = observacao.status
         // emitir um evento do tipo ObservacaoAtualizada
         console.log('ObservacaoClassificada recebida')
-        axios.post(`http://localhost:${ports.barramentoEventos}/eventos`, {
+        axios.post(`http://192.168.1.22:10000/eventos`, {
             tipo: 'ObservacaoAtualizada',
             dados: {
                 id: observacao.id,
@@ -54,7 +53,7 @@ function registroFunction (msg: string){
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: iRegistro = {data: dataFormat, mss: 'Observacoes', endpoint: msg}
 
-    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`,{
+    axios.post(`http://192.168.1.22:10000/eventos`,{
         tipo: 'RegistroCriado',
         dados: registro
     })
@@ -75,7 +74,7 @@ app.post('/lembretes/:id/observacoes', (req,res) => {
     // na coleÃ§Ã£o pega no passo anterior, adiciono um novo objeto caracterizado por id e texto
     // atualizar o ponteiro na base global para que ele aponte apar a coleção que contema nova observacao
     observacoes[req.params.id] = observacoesDoLembrete
-    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`, {
+    axios.post(`http://192.168.1.22:10000/eventos`, {
         tipo: 'ObservacaoCriada',
         dados: {...obs, lembreteId: req.params.id}
     })
@@ -91,7 +90,7 @@ app.get('/lembretes/:id/observacoes', (req,res) => {
 })
 
 
-const port = ports.observacoes
+const port = 5000
 app.listen(port, () => {
     console.log(`Observacoes. ${port}`)
 })

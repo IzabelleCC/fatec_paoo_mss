@@ -1,7 +1,6 @@
 import express from 'express';
 import axios from 'axios';
 import { format } from 'date-fns';
-import ports from '../../configPortas';
 
 const app = express()
 app.use(express.json())
@@ -17,7 +16,7 @@ function registroFunction (msg: string){
     const dataFormat = format(data, 'dd/MM/yyyy HH:mm:ss.SSS')
     const registro: iRegistro = {data: dataFormat, mss: 'Consulta', endpoint: msg}
 
-    axios.post(`http://localhost:${ports.barramentoEventos}/eventos`,{
+    axios.post(`http://192.168.1.22:10000/eventos`,{
         tipo: 'RegistroCriado',
         dados: registro
     })
@@ -76,11 +75,11 @@ app.post('/eventos', (req, res) => {
     res.end()
 })
 
-const port = ports.consulta
+const port = 6000
 app.listen(port, async () => {
     console.log(`Consulta. ${port}`)
     
-    const result = await axios.get(`http://localhost:${ports.barramentoEventos}/eventos`)
+    const result = await axios.get(`http://192.168.1.22:10000/eventos`)
     result.data.forEach((valor: Evento, indice: number , colecao: Evento[]) => {
         try{
             funcoes[valor.tipo](valor.dados)

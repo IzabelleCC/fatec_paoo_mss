@@ -1,6 +1,5 @@
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import ports from '../../configPortas';
 
 const app = express()
 app.use(express.json())
@@ -26,7 +25,7 @@ app.get('/registros', (req,res) => {
     res.status(200).json(baseRegistros)
 })
 
-const port = ports.registro
+const port = 9000
 app.listen(port, () => {
     console.log(`Observacoes. ${port}`)
 })

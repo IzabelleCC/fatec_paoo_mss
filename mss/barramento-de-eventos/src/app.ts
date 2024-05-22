@@ -1,6 +1,5 @@
 import express from 'express';
 import axios from 'axios';
-import ports from '../../configPortas';
 
 const app = express();
 app.use(express.json());
@@ -18,23 +17,23 @@ app.post('/eventos', async (req, res) => {
 
     try{
       //evento lembrentes
-     await axios.post(`http://localhost:${ports.lembretes}/eventos`, evento);
+     await axios.post(`http://192.168.1.22:4000/eventos`, evento);
     }catch(e){}
     try{
       //eventos observacoes
-     await axios.post(`http://localhost:${ports.observacoes}/eventos`, evento);
+     await axios.post(`http://192.168.1.22:5000/eventos`, evento);
     }catch(e){}
     try{
       //eventos consulta
-     await axios.post(`http://localhost:${ports.consulta}/eventos`, evento);
+     await axios.post(`http://192.168.1.22:6000/eventos`, evento);
     }catch(e){}
     try{
       //eventos registro
-     await axios.post(`http://localhost:${ports.registro}/eventos`, evento);
+     await axios.post(`http://192.168.1.22:9000/eventos`, evento);
     }catch(e){}
     try{
       //eventos classificacao
-      await axios.post(`http://localhost:${ports.classificacao}/eventos`, evento);
+      await axios.post(`http://192.168.1.22:7000/eventos`, evento);
     }catch(e){}
     res.end()
 })
@@ -43,7 +42,7 @@ app.get('/eventos', (req, res) => {
   res.json(eventos)
 })
 
-const port = ports.barramentoEventos
+const port = 10000
 app.listen(port, () => {
   console.log(`Barramento de eventos ${port}`)
 });
